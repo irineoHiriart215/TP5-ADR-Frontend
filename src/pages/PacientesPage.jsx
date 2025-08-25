@@ -9,6 +9,7 @@ const PacientesPage = () => {
   const [pacientes, setPacientes] = useState([]);
   const [error, setError] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [pacienteEditando, setPacienteEditando] = useState(null);
 
   const cargarPacientes = async () => {
       try {
@@ -20,6 +21,11 @@ const PacientesPage = () => {
       }
     };
 
+  const onEditar = (paciente) => {
+    setPacienteEditando(paciente);
+    setMostrarFormulario(true);
+  };
+  
   useEffect(() => {
     cargarPacientes();
   }, []);
@@ -27,7 +33,8 @@ const PacientesPage = () => {
   
   const handlePacienteCreado = () => {
       setMostrarFormulario(false);
-      cargarPacientes(); // Recargar la lista después de crear un paciente
+      setPacienteEditando(null);
+      cargarPacientes();
     };
 
   return (  
@@ -37,7 +44,10 @@ const PacientesPage = () => {
       <div style={styles.content}>
         {mostrarFormulario ? (
           <div style={styles.listSection}>
-            <FormularioPaciente onPacienteCreado={handlePacienteCreado} />
+            <FormularioPaciente 
+              onPacienteCreado={handlePacienteCreado} 
+              paciente={pacienteEditando}
+            />
           </div>
         ) : (
           <div style={styles.listSection}>
@@ -45,7 +55,7 @@ const PacientesPage = () => {
             <ul style={styles.list}>
               {pacientes.map((paciente) => (
                 <li key={paciente.id} style={styles.card}>
-                  <PacienteCard paciente={paciente} />
+                  <PacienteCard paciente={paciente} onEditar={() => onEditar(paciente)} />
                 </li>
               ))}
             </ul>
@@ -53,7 +63,7 @@ const PacientesPage = () => {
         )}
       </div>
       <div style={styles.actions}>
-        <Button variant="primary" onClick={() => setMostrarFormulario(!mostrarFormulario)}>
+        <Button variant="primary" onClick={() => {setMostrarFormulario(!mostrarFormulario); setPacienteEditando(null);}}>
           {mostrarFormulario ? 'Cancelar' : 'Crear paciente'}
         </Button>
       </div>
@@ -95,8 +105,8 @@ const styles = {
     padding: '32px',
     borderRadius: '12px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-    width: '90%', // ocupa el 90% del ancho disponible
-    maxWidth: '1000px', // más ancho que antes
+    width: '90%', 
+    maxWidth: '1000px',
     margin: '0 auto',
     justifyContent: 'center',
   },

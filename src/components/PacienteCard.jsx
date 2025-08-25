@@ -2,7 +2,7 @@ import React from 'react';
 import { colours } from '../constants/colours';
 import Button from './Button';
 
-const PacienteCard = ({ paciente, onEditar, onEliminar }) => {
+const PacienteCard = ({ paciente, onEditar}) => {
 const fecha = new Date(paciente.fecha_nacimiento);
   const fechaFormateada = fecha.toLocaleDateString('es-AR', {
     day: '2-digit',
@@ -22,7 +22,6 @@ const fecha = new Date(paciente.fecha_nacimiento);
       )}
       <div style={styles.actions}> 
         <Button variant="secondary" onClick={() => onEditar(paciente)}>Editar</Button>
-        <Button variant="secondary" onClick={() => onEliminar(paciente.id)}>Eliminar</Button>
       </div>
     </div>
   );

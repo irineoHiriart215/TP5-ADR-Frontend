@@ -4,14 +4,14 @@ import { colours } from '../constants/colours';
 import Input from './Input';
 import Button from './Button';
 
-const FormularioPaciente= ({ onPacienteCreado }) =>{
-    const [nombre, setNombre] = useState('');
-    const [dni, setDni] = useState('');
-    const [fecha_nacimiento, setFechaNac] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [email, setEmail] = useState('');
-    const [observaciones, setObservaciones] = useState('');
-    const [obra_social_id, setObraSocialId] = useState('');
+const FormularioPaciente= ({ onPacienteCreado, paciente }) =>{
+    const [nombre, setNombre] = useState(paciente?.nombre || '');
+    const [dni, setDni] = useState(paciente?.dni || '');
+    const [fecha_nacimiento, setFechaNac] = useState(paciente?.fecha_nacimiento?.slice(0, 10) || '');
+    const [telefono, setTelefono] = useState(paciente?.telefono || '');
+    const [email, setEmail] = useState(paciente?.email || '');
+    const [observaciones, setObservaciones] = useState(paciente?.observaciones || '');
+    const [obra_social_id, setObraSocialId] = useState(paciente?.obra_social_id || null);
     const [OS, setOS] = useState([]);
 
     useEffect (() => {
@@ -21,6 +21,8 @@ const FormularioPaciente= ({ onPacienteCreado }) =>{
         };
         cargarOS();
     }, []);
+
+    const esEdicion = Boolean(paciente?.id);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +37,11 @@ const FormularioPaciente= ({ onPacienteCreado }) =>{
         };
 
         try {
+          if (esEdicion){
+            await fetchConToken(`pacientes/${paciente.id}`, 'PUT', nuevoPaciente)
+          } else {
             await fetchConToken('pacientes','POST', nuevoPaciente);
+          };
             if (onPacienteCreado) onPacienteCreado();
             setNombre('');
             setDni('');

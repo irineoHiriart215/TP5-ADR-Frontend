@@ -20,13 +20,22 @@ const HomePage = () => {
     }
   };
 
+  const onEliminar = async (id) => {
+    try {
+      await fetchConToken(`turnos/${id}`,'DELETE');
+      cargarTurnos();
+    }
+    catch (error){
+      console.error('Error al eliminar el turno:', error);
+    } 
+  };
+
   useEffect(() => {
     cargarTurnos();
   }, []);
 
   return (
-    
-<div style={styles.container}>
+      <div style={styles.container}>
       <h2 style={styles.title}>Inicio</h2>
 
       <nav style={styles.nav}>
@@ -54,7 +63,7 @@ const HomePage = () => {
                 <TurnoCard
                   turno={turno}
                   onEditar={(t) => console.log('Editar turno:', t)}
-                  onEliminar={(id) => console.log('Eliminar turno con ID:', id)}
+                  onEliminar={(id) => onEliminar(id)}
                 />
               </li>
             ))}

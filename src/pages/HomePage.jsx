@@ -4,8 +4,10 @@ import FormularioTurno from '../components/FormularioTurno';
 import { colours } from '../constants/colours';
 import Button from '../components/Button';
 import TurnoCard from '../components/TurnoCard';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [ turnos, setTurnos] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const profesional_id = localStorage.getItem('profesionalId');
@@ -39,10 +41,10 @@ const HomePage = () => {
       <h2 style={styles.title}>Inicio</h2>
 
       <nav style={styles.nav}>
-        <Button variant="secondary" onClick={() => window.location.href = '/configuracion'}>
+        <Button variant="secondary" onClick={() => navigate('/configuracion')}>
           Configuración
         </Button>
-        <Button variant="secondary" onClick={() => window.location.href = '/pacientes'}>
+        <Button variant="secondary" onClick={() => navigate('/pacientes')}>
           Pacientes
         </Button>
       </nav>

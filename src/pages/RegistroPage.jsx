@@ -30,7 +30,7 @@ const RegisterPage = () => {
             navigate('/');
         }
         catch (error) {
-            console.error('Error al registrar profesional:', error.response?.data?.error);
+            console.error('Error al registrar profesional:', error.message);
         }
     }
 

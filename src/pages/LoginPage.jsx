@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { colours } from '../constants/colours';
+import { fetchSinToken } from '../services/api';
 
 const LoginPage = () => {
   const [dni, setDni] = useState('');
@@ -12,11 +13,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/profesionales/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ dni, password }),
-      });
+      const response = await fetchSinToken('profesionales/login', 'POST', {dni:dni, password: password})
 
       if (response.ok) {
         const data = await response.json();
@@ -24,7 +21,8 @@ const LoginPage = () => {
         localStorage.setItem('profesionalId', data.profesionalId);
         navigate('/inicio');
       } else {
-        alert('Credenciales incorrectas');
+        const errorData = await response.json();
+        alert(errorData.error ||'Credenciales incorrectas');
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error);

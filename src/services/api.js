@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const fetchConToken = async (endpoint, method = 'GET', body = null) => {
   const token = localStorage.getItem('token');
@@ -20,7 +20,6 @@ export const fetchConToken = async (endpoint, method = 'GET', body = null) => {
 };
 
 export const fetchSinToken = async (endpoint, method = 'GET', body = null) => {
-
   const options = {
     method,
     headers: {
@@ -33,5 +32,5 @@ export const fetchSinToken = async (endpoint, method = 'GET', body = null) => {
   }
 
   const response = await fetch(`${API_URL}/${endpoint}`, options);
-  return response.json();
+  return response;
 };

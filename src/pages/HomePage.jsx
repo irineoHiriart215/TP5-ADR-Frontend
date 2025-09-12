@@ -47,6 +47,9 @@ const HomePage = () => {
         <Button variant="secondary" onClick={() => navigate('/pacientes')}>
           Pacientes
         </Button>
+        <Button variant="secondary" onClick={() => navigate('/obras-sociales')}>
+          Obras Sociales
+        </Button>
       </nav>
       
       <div style={styles.content}>

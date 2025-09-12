@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegistroPage';
 import HomePage from './pages/HomePage';
 import PacientesPage from './pages/PacientesPage';
 import ConfiguracionPage from './pages/ConfiguracionPage';
+import ObrasSocialesPage from './pages/ObrasSocialesPage';
 import RutaPrivada from './components/RutaPrivada';
 import Headbar from './components/headbar';
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/inicio" element={<RutaPrivada><HomePage /></RutaPrivada>} />
         <Route path="/pacientes" element={<RutaPrivada><PacientesPage /></RutaPrivada>} />
         <Route path="/configuracion" element={<RutaPrivada><ConfiguracionPage /></RutaPrivada>} />
+        <Route path="/obras-sociales" element={<RutaPrivada><ObrasSocialesPage /></RutaPrivada>} />
       </Routes>
     </>
   );
